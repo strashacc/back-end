@@ -2,7 +2,7 @@ const socket = {};
 
 onload = () => {
 
-    socket.connection = new WebSocket('ws://' + location.host + ':81');
+    socket.connection = new WebSocket('ws://' + location.host + ':8081');
 
     socket.connection.onopen = function () {
         console.log('Connected to WebSocketServer');

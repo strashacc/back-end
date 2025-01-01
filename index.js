@@ -5,7 +5,7 @@ const ws = require('ws');
 const api = require('./api.json');
 
 const PORT = 80;
-const WSPORT = 81;
+const WSPORT = 8081;
 
 const wss = new ws.WebSocketServer({ port: WSPORT });
 
