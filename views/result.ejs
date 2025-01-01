@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your BMI</title>
+    <style>
+        body{
+            justify-items: center;
+        }
+
+        .box{
+            width: fit-content;
+            padding: 20px;
+
+            border: 2px solid grey;
+            border-radius: 15px;
+            justify-items: center;
+
+            background-color: aliceblue;
+        }
+
+        .link.subtle{
+            color: grey;
+            text-decoration: none;
+        }
+        .subtle{
+            opacity: 50%;
+        }
+        .subtle:hover{
+            opacity: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h1>Your BMI is:</h1>
+        <h2 id="bmi"><%= bmi %></h2>
+        <h3 id="bmi-message"></h3>
+    </div>
+    <a href="/" class="link subtle">Return</a>
+
+    <script>
+        onload = function(){
+            var bmi = document.getElementById('bmi').innerText;
+            var bmi_message = document.getElementById('bmi-message');
+            if(bmi < 18.5){
+                bmi_message.innerText = 'You are UNDERWEIGHT';
+                bmi_message.style.color = 'blue';
+            }
+            else if(bmi < 25){
+                bmi_message.innerText = 'You are NORMAL WEIGHT';
+                bmi_message.style.color = 'green';
+            }
+            else if(bmi < 30){
+                bmi_message.innerText = 'You are OVERWEIGHT';
+                bmi_message.style.color = 'yellow';
+            }
+            else{
+                bmi_message.innerText = 'You are OBESE';
+                bmi_message.style.color = 'red';
+            }
+        };
+    </script>
+</body>
+</html>
