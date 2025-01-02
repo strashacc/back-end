@@ -18,16 +18,33 @@ wss.on('connection', function connection(client) {
     let newsPage = 1;
 
     client.on('message', function message(message) {
-        console.log(JSON.parse(message.toString()));
         const request = JSON.parse(message.toString());
-        
+        console.log('pass');
+        console.log(request);
         switch (request.type) {
             case 'news' :
                 sendNews();
+                break;
             case 'weather' : 
                 sendWeather(request.city);
+                break;
+            case 'translate' :
+                sendTranslation(request.value);
+                break;
         }
     });
+
+    function sendTranslation(request) {
+        console.log('pass');
+        console.log(request);
+        getTranslation(request).then(response => {
+            if(!response) return;
+
+            const result = response.translatedText;
+            message = JSON.stringify({type: 'translation', value: result});
+            client.send(message); 
+        });
+    }
 
     function sendNews() {
         getNews('', newsPage)
@@ -142,3 +159,29 @@ function getCoords(city) {
 
     return promise;
 }
+
+function getTranslation(request) {
+    const url = 'http://127.0.0.1:5000/translate';
+    const req = 'source=' + request.inputLang + '&target=' + request.outputLang + '&q=' + request.text;
+
+    const promise = fetch(url, {method: 'POST', headers: {'Content-Type': 'application/x-www-form-urlencoded'}, body: req})
+        .then(res => {
+            if (res.ok) {
+                return res.json();
+            }
+            else {
+                throw new Error('Could not load translation');
+            }
+        })
+        .catch(error => { console.error(error); });
+    
+        return promise;
+}
+
+request = {
+    inputLang: 'ru',
+    outputLang: 'en',
+    text: 'Всем привет, это тест системы переводчика'
+}
+response = getTranslation(request);
+response.then(console.log);

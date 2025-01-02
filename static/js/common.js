@@ -15,8 +15,13 @@ onload = () => {
         switch (msgjson.type) {
             case 'weather':
                 setWeather(msgjson.value);
+                break;
             case 'news':
                 addNews(msgjson.value);
+                break;
+            case 'translation' :
+                receiveTranslation(msgjson.value);
+                break;
         }
     }
 }

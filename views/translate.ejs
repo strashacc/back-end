@@ -6,6 +6,7 @@
     <title>Translate</title>
     <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/translate.css">
 </head>
 <body>
     <header>
@@ -43,6 +44,48 @@
             </div>
         </div>
     </header>
+
+    
+    <main>
+        <div class="block">
+            <div class="panel inline" id="news">
+                <textarea class="card" name="input" id="translate-input" placeholder="Enter text to translate"></textarea>
+                <div id="translate-controls">
+                    <button class="btn transparent" onclick="togglePopup('input-lang-menu')">
+                        <h3 id="input-lang">en</h3>
+                    </button>
+                    <button class="btn transparent" id="translateBtn">
+                        <img src="images/right-arrow-btn.svg" alt="">
+                    </button>
+                    <button class="btn transparent" onclick="togglePopup('output-lang-menu')">
+                        <h3 id="output-lang">ru</h3>
+                    </button>
+                </div>
+                <div class="column none">
+                    <div class="menu collapse" id="input-lang-menu">
+                        <menu id="input-lang-select">
+                            <h4 class="menu-select text center">ru</h4>
+                            <h4 class="menu-select text center">en</h4>
+                            <h4 class="menu-select text center">de</h4>
+                            <h4 class="menu-select text center">es</h4>
+                        </menu>
+                    </div>
+                    <div class="menu collapse" id="output-lang-menu">
+                        <menu id="output-lang-select">
+                            <h4 class="menu-select text center">ru</h4>
+                            <h4 class="menu-select text center">en</h4>
+                            <h4 class="menu-select text center">de</h4>
+                            <h4 class="menu-select text center">es</h4>
+                        </menu>
+                    </div>
+                </div>    
+                <p class="card" id="translate-output"></p>
+            </div>
+        </div>
+    </main>
+
+
+    <div class="transparent" id="overlay"></div>
 
 
     <script src="js/common.js"></script>
