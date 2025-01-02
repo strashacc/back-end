@@ -81,7 +81,7 @@ app.post('/calculate-bmi', (req, res) => {
     let bmi = (weight / (height * height)).toFixed(1);
     res.render('result', { bmi: bmi });
 });
-app.get('translate', (req, res) => {
+app.get('/translate', (req, res) => {
     res.render('translate');
 });
 
