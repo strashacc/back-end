@@ -9,6 +9,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@google-cloud/translate": "^8.5.0",
     "ejs": "^3.1.10",
     "express": "^4.21.2",
     "web-practice": "file:",
