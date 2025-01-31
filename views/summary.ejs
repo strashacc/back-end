@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stats</title>
+    <style>
+        body {
+            width: 100vw;
+        }
+        a {
+            color: black;
+            font-family: sans-serif;
+            font-weight: bold;
+        }
+        .row {
+            margin: 0 20px 0 20px;
+            padding: 0 20px 0 20px;
+            width: auto;
+            height: fit-content;
+            display: flex;
+            justify-content: space-between;
+            border: 2px darkgrey solid;
+            border-radius: 10px;
+        }
+        form {
+            margin-top: 20px;
+            width: fit-content;
+        }
+    </style>
+</head>
+<body>
+    <nav style="display: flex; justify-content: space-evenly; margin-bottom: 20px;">
+        <a href="http://localhost:8080/summary?currency=KZT">KZT</a>
+        <a href="http://localhost:8080/summary?currency=EUR">EUR</a>
+        <a href="http://localhost:8080/summary?currency=RUB">RUB</a>
+    </nav>
+
+    <div class="row">
+        <div>
+            <p><b>Avg: </b><%= data.avg %></p>
+            <p><b>Min: </b><%= data.min %></p>
+            <p><b>Max: </b><%= data.max %></p>
+            <p><b>StdDev: </b><%= data.stdDev %></p>
+        </div>
+    
+        <div id="dateSelection">
+            <form name="dateForm">
+                <label for="dateA">From</label>
+                <br>
+                <input type="date" name="dateA" id="dateA">
+                <br>
+                <label for="dateB">To</label>
+                <br>
+                <input type="date" name="dateB" id="dateB">
+                <br>
+                <button type="button" onclick="getByDate()">Get Data</button>
+            </form>
+        </div>
+    </div>
+
+    
+
+    <script>
+        function getByDate() {
+            const dateForm = document.forms['dateForm'];
+            const dateA = dateForm['dateA'].value;
+            const dateB = dateForm['dateB'].value;
+            location.assign(`${location.href}&dateA=${dateA}&dateB=${dateB}`)
+        }
+    </script>
+</body>
+</html>

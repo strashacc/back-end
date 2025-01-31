@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exchange Rate</title>
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <style>
+        a {
+            color: black;
+            font-family: sans-serif;
+            font-weight: bold;
+        }
+        #chart {
+            border: 2px darkgrey solid;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <nav style="display: flex; justify-content: space-evenly; margin-bottom: 20px;">
+        <a href="http://localhost:8080/exchange-rate?currency=KZT">KZT</a>
+        <a href="http://localhost:8080/exchange-rate?currency=EUR">EUR</a>
+        <a href="http://localhost:8080/exchange-rate?currency=RUB">RUB</a>
+    </nav>
+    <div id="chart" style="width:100%; height:500px;"></div>
+
+    </canvas>
+
+    <form name="dateForm">
+        <label for="dateA">From</label>
+        <input type="date" name="dateA" id="dateA">
+        <label for="dateB">To</label>
+        <input type="date" name="dateB" id="dateB">
+        <br>
+        <button type="button" onclick="getByDate()">Get Data</button>
+    </form>
+
+    <script>
+        
+        function getByDate() {
+            const dateForm = document.forms['dateForm'];
+            const dateA = dateForm['dateA'].value;
+            const dateB = dateForm['dateB'].value;
+            location.assign(`${location.href}&dateA=${dateA}&dateB=${dateB}`)
+        }
+
+        window.onresize = () => {
+            setChart();
+        }
+
+        google.charts.load('current',{packages:['corechart']});
+        google.charts.setOnLoadCallback(setChart);
+        
+        function setChart() {
+
+            const chartData = JSON.parse('<%- data %>');
+
+            const data = google.visualization.arrayToDataTable(chartData);
+
+            const options = {
+                title: `Exchange rates USD to ${chartData[0][1]}`,
+                hAxis: {title: `${chartData[0][0]}`},
+                vAxis: {title: `${chartData[0][1]}`},
+                legend: 'none'
+            };
+
+            const chart = new google.visualization.LineChart(document.getElementById('chart'));
+            chart.draw(data, options);
+        }
+
+    </script>
+
+</body>
+</html>
