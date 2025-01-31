@@ -9,10 +9,19 @@ app.use(express.static(path.join(__dirname, 'static')));
 
 app.get('/exchange-rate', async (req, res) => {
     const currency = req.query.currency;
+    if (!currency || !currency.length) {
+        res.status(400).send("Bad Request: Currency not specified");
+        return;
+    }
+
     const dateA = (req.query.dateA ? new Date(req.query.dateA) : new Date(0));
     const dateB = (req.query.dateB ? new Date(req.query.dateB) : new Date(Date.now()));
     try{
         const data = await db.getData(currency, dateA, dateB);
+        if (!data.length) {
+            res.status(404).send("Error: Resource Not Found");
+            return;
+        }
         const chartData = JSON.stringify(processData(data));
         res.render('exchange-rate', {data: chartData});
     } catch (error) {
@@ -33,11 +42,21 @@ app.get('/exchange-rate', async (req, res) => {
 
 app.get('/summary', async (req, res) => {
     const currency = req.query.currency;
+    if (!currency || !currency.length) {
+        res.status(400).send("Bad Request: Currency not specified");
+        return;
+    }
 
     const dateA = (req.query.dateA ? new Date(req.query.dateA) : new Date(0));
     const dateB = (req.query.dateB ? new Date(req.query.dateB) : new Date(Date.now()));
     try {
         const data = await db.getData(currency, dateA, dateB);
+
+        if (!data.length) {
+            res.status(404).send("Error: Resource Not Found");
+            return;
+        }
+
         const processedData = processData(data);
         res.render('summary', {data: processedData})
     } catch(error) {

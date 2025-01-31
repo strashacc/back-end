@@ -9,10 +9,12 @@ async function getData(currency, dateA, dateB) {
         const db = client.db(process.env.DB);
         const collection = db.collection(process.env.COLLECTION);
 
+        const query = {Date: {$gte: dateA, $lte: dateB}};
+        query[`${currency}`] = {$exists: true};
         const projection = {_id: 0, Date: 1};
         projection[`${currency}`] = 1;
 
-        const data = await collection.find({Date: {$gte: dateA, $lte: dateB}}, {projection: projection, sort: {'Date': 1}}).toArray();
+        const data = await collection.find(query, {projection: projection, sort: {'Date': 1}}).toArray();
 
         return data;
 
