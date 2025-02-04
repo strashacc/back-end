@@ -39,7 +39,6 @@ app.get('/exchange-rate', async (req, res) => {
         return newData;
     }
 });
-console.log(new Date("2025-01-01T14:53:11"))
 
 app.get('/summary', async (req, res) => {
     const currency = req.query.currency;
